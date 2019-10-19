@@ -1,87 +1,243 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Phuc Robotics</title>
-	<style>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	</style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    .no-padding {
+      padding-left: ;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .row {
+      padding-left: -15;
+      padding-right: -15;
+      margin-left: -15;
+      margin-right: -15;
+    }
+    .col {
+      padding-left: -15;
+      padding-right: -15;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    </style>
     <script type="text/javascript">
+      var ctx1=null;
+      var ctx2=null;
+      var img1=new Image();
+      var img2=new Image();
+      var canvas1=null;
+      var canvas2=null;
+      var x=0;
+      var y=0;
+      var dx=5;
+      var dy=5;
       //init object globally
-      var objImage= null;
       function init(){
-        objImage=document.getElementById("image1");       
-        objImage.style.position='relative';
-        objImage.style.left='0px';
-        objImage.style.top='0px';
+        //objImage=document.getElementById("image1");       
+        //objImage.style.position='relative';
+        //objImage.style.left='0px';
+        //objImage.style.top='0px';
+        canvas1=document.getElementById("image1");
+        canvas2=document.getElementById("image2");
+        ctx1=canvas1.getContext("2d");
+        ctx2=canvas2.getContext("2d");
+        //var img=document.getElementById("image1");
+        img1.onload=function () {
+          ctx1.drawImage(img1,x,y,45,45);
+        }
+        img2.onload=function () {
+          ctx2.drawImage(img2,x,y,45,45);
+        }
+        img1.src="Images/box-turtle.png";
+        img2.src="Images/melodic.png";
       }
       function getKeyAndMove(e){        
         var key_code=e.which||e.keyCode;
         switch(key_code){
-          case 37: //left arrow key
+          case 74: //left arrow key
             moveLeft();
             break;
-          case 38: //Up arrow key
+          case 73: //Up arrow key
             moveUp();
             break;
-          case 39: //right arrow key
+          case 76: //right arrow key
             moveRight();
             break;
-          case 40: //down arrow key
+          case 188: //down arrow key
             moveDown();
             break;            
         }
       }
       function moveLeft(){
-        objImage.style.left=parseInt(objImage.style.left)-5 +'px';
+        if (x>0){
+            x-=dx;
+            ctx1.clearRect(0,0,canvas1.width,canvas1.height)
+            ctx1.drawImage(img1,x,y,45,45);
+        }
       }
       function moveUp(){
-        objImage.style.top=parseInt(objImage.style.top)-5 +'px';
+        if (y>0){
+            y-=dy;
+            ctx1.clearRect(0,0,canvas1.width,canvas1.height)
+            ctx1.drawImage(img1,x,y,45,45);
+        }
       }
       function moveRight(){
-        objImage.style.left=parseInt(objImage.style.left)+5 +'px';
+        if (x<(canvas1.width-45)){
+            x+=dx;
+            console.log(x);
+            ctx1.clearRect(0,0,canvas1.width,canvas1.height)
+            ctx1.drawImage(img1,x,y,45,45);
+        }
       }
       function moveDown(){
-        objImage.style.top=parseInt(objImage.style.top)+5 +'px';
+        if (y<canvas1.height-45){
+            y+=dy;
+            ctx1.clearRect(0,0,canvas1.width,canvas1.height)
+            ctx1.drawImage(img1,x,y,45,45);
+        }
       }
       window.onload=init;
     </script>
   </head>
 
   <body onkeydown='getKeyAndMove(event)'>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Phuc Robotics</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About Me</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#experience">Experience</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#projects">Projects</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown link
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact Info</a>
           </li>
         </ul>
       </div>
     </nav>
-    <h1>JavaScript - Move Object with Arrow Keys using JavaScript Function.</h1>
-    <h2>Use Arrow keys to move object left, top, right and down.</h2>
-    <img id="image1" src="Images/box-turtle.png" alt="includehelp.com"/>
 
+    <div class="container-fluid ">
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="about">
+              About Me
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                I'm a self-taught robotics enthusiast with background in IT
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="experience">
+              Experience
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                Python / ROS (1 year)
+              </p>
+
+              <p class="card-text">
+                IT Technical Sales / Support Engineer (2 years)
+              </p>
+              <p class="card-text">
+                IT Helpdesk Support (3 years)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="projects">
+              Projects
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                Here is my humble attempt at the ROS turtlesim in Javascript.
+              </p>
+              <p class="card-text">
+                <a href="#naive" class="btn btn-warning">Naive turtle</a>
+                <a href="#sophisticated" class="btn btn-success">Sophisticated turtle</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="naive">
+              Naive Turtle
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                Use teleop keys to move turtle ( j : left | l : right | i : up | , : down )
+              </p>
+              <canvas id="image1" width="300" height="300" style="border:1px solid #d3d3d3;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="sophisticated">
+              Sophisticated Turtle
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                Use Arrow keys to move object left, top, right and down.
+              </p>
+              <canvas id="image2" width="45" height="45" style="border:0px solid #d3d3d3;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card w-100" >
+            <div class="card-header" id="contact">
+              Contact Information
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                Email: phucrobotics@gmail.com
+              </p>
+              <a href="https://www.linkedin.com/in/phuc-nguyen-24bab16b" class="btn btn-primary">Linkedin</a>
+              <a href="https://github.com/phucrobotics" class="btn btn-dark">Github</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq5sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/esm/popper-utils.js" integrity="sha256-Va9aSmJNpHm6UtpqIuy0vf65KJ1kM8KmtpD2CVkKiec=" crossorigin="anonymous"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
